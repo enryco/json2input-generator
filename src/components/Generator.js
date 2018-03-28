@@ -67,7 +67,7 @@ class Generator extends Component {
   }
 
   getInput = (data, route = []) => {
-    const style = { marginLeft: 20 }
+    const style = { marginLeft: _.size(route) > 1 ? 20 : 0 }
 
     return _.map(data, (value, key) => {
 

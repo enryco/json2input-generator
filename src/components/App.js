@@ -16,7 +16,7 @@ class App extends Component {
         "yes",
         "it",
         {
-          wtf: 'can'
+          definetly: 'can'
         }
       ]
     }
