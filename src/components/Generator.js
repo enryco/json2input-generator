@@ -8,27 +8,20 @@ class Generator extends Component {
 
   componentDidMount() {
 
-    const data = _.cloneDeep(this.props.data)
-    const data2 = _.cloneDeep(this.props.data)
+    const init = _.cloneDeep(this.props.data)
+    const changed = this.cleanPlaceholder(_.cloneDeep(this.props.data))
 
+    // const init = { ...this.props.data } // fails as it only performes a shallow clone
+    // const changed = { ...data } // fails as it only performes a shallow clone
 
-
-    // const data = { ...this.props.data } // fails as it only performes a shallow clone
-    // const data2 = { ...data } // fails as it only performes a shallow clone
-
-    // const data = JSON.parse(JSON.stringify(this.props.data))
-    // const data2 = JSON.parse(JSON.stringify(data))
-
-    data.test = 'test -> data'
-    data2.test = 'test -> data2'
+    // const init = JSON.parse(JSON.stringify(this.props.data))
+    // const changed = JSON.parse(JSON.stringify(data))
 
     this.setState({
-      init: data,
-      // init2: data,
-      changed: data2
+      init,
+      changed
     })
 
-    console.log(this.props.data, data, data2)
 
   }
 
@@ -81,19 +74,31 @@ class Generator extends Component {
 
       if (typeof value === 'object') {
 
-        return <div key={key} style={style}>
-          <div>
-            {key}:
-          </div>
-          <div>
-            {this.getInput(value, [...route, key])}
-          </div>
-        </div>
+        switch (key) {
+          case 'changed':
+            return this.getInput(value, [...route, key])
+            break
+          case 'init':
+            return null
+            break
+
+          default:
+            return (<div key={key} style={style}>
+              <div>
+                {key}:
+              </div>
+              <div>
+                {this.getInput(value, [...route, key])}
+              </div>
+            </div>)
+            break
+        }
       }
 
       if (typeof value !== 'object') {
 
         const currentRoute = [...route, key]
+        const initRoute = ['init', ..._.tail(currentRoute)]
 
         return <div key={key} style={style}>
           <span>{key}: </span>
@@ -104,7 +109,7 @@ class Generator extends Component {
             route={JSON.stringify(currentRoute)}
             value={_.get({ ...this.state }, currentRoute)}
             onChange={this.handleChange}
-            placeholder={value} />
+            placeholder={_.get({ ...this.state }, initRoute)} />
         </div>
       }
     })
@@ -120,7 +125,7 @@ class Generator extends Component {
         {
           this.getInput(state)
         }
-        <button onClick={() => this.props.submitHandle({ ...this.state })} >submit</button>
+        <button onClick={() => this.props.submitHandle({ ...this.state.changed })} >submit</button>
       </div>
     )
   }

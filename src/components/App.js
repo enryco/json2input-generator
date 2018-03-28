@@ -29,6 +29,10 @@ class App extends Component {
           data={this.state}
           submitHandle={data => { console.log(data) }}
         />
+        <Generator
+          data={{username: 'string', email: 'string'}}
+          submitHandle={data => { console.log(data) }}
+        />
       </div>
     );
   }
