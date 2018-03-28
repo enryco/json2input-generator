@@ -25,30 +25,23 @@ class Generator extends Component {
 
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('nextProps', nextProps)
-  }
-
   cleanPlaceholder = (data) => {
 
     let copy = { ...data }
 
-    const rec = (value, route = []) => {
+    const recursivlyCleanData = (value, route = []) => {
       _.forEach(value, (entry, key, array) => {
         const currentRoute = [...route, key]
-        console.log(currentRoute)
 
         if ((typeof entry === 'object') || Array.isArray(entry)) {
-          rec(entry, currentRoute)
+          recursivlyCleanData(entry, currentRoute)
         } else {
           _.set(copy, currentRoute, '')
         }
       })
     }
 
-    rec(copy)
-
-    console.log({ ...copy })
+    recursivlyCleanData(copy)
 
     return copy
 
@@ -118,14 +111,13 @@ class Generator extends Component {
 
   render() {
     const state = { ...this.state }
-    console.log(state)
 
     return (
       <div className="es-generator">
         {
           this.getInput(state)
         }
-        <button onClick={() => this.props.submitHandle({ ...this.state.changed })} >submit</button>
+        <button onClick={() => this.props.handleSubmit({ ...this.state.changed })} >submit</button>
       </div>
     )
   }

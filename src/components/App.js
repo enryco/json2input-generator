@@ -27,11 +27,11 @@ class App extends Component {
       <div className="App">
         <Generator
           data={this.state}
-          submitHandle={data => { console.log(data) }}
+          handleSubmit={data => { console.log(data) }}
         />
         <Generator
           data={{username: 'string', email: 'string'}}
-          submitHandle={data => { console.log(data) }}
+          handleSubmit={data => { console.log(data) }}
         />
       </div>
     );
