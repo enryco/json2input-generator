@@ -13,3 +13,9 @@ const house = {
   }
 }
 ```
+
+
+```js
+typeof [] // > 'object'
+typeof {} // > 'object'
+```

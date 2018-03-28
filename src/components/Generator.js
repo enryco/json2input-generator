@@ -33,7 +33,7 @@ class Generator extends Component {
       _.forEach(value, (entry, key, array) => {
         const currentRoute = [...route, key]
 
-        if ((typeof entry === 'object') || Array.isArray(entry)) {
+        if (typeof entry === 'object') {
           recursivlyCleanData(entry, currentRoute)
         } else {
           _.set(copy, currentRoute, '')
