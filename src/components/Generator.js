@@ -70,10 +70,8 @@ class Generator extends Component {
         switch (key) {
           case 'changed':
             return this.getInput(value, [...route, key])
-            break
           case 'init':
             return null
-            break
 
           default:
             return (<div key={key} style={style}>
@@ -84,7 +82,6 @@ class Generator extends Component {
                 {this.getInput(value, [...route, key])}
               </div>
             </div>)
-            break
         }
       }
 
