@@ -1,5 +1,22 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
+import styled from 'styled-components'
+
+
+const Input = styled.input`
+  font-size: inherit;
+  padding: 0.5em;
+  margin: 0.2em;
+  color: palevioletred;
+  background: lightSteelBlue;
+  border: none;
+  border-bottom: 1px solid grey;
+  border-radius: 3px;
+  &:focus {
+    outline: none
+  }
+`
+
 
 class Generator extends Component {
 
@@ -92,7 +109,7 @@ class Generator extends Component {
 
         return <div key={key} style={style}>
           <span>{key}: </span>
-          <input
+          <Input
             key={key}
             ref={e => _.set(this, currentRoute, e)}
             type="text"
@@ -109,17 +126,21 @@ class Generator extends Component {
   render() {
     const state = { ...this.state }
 
-    return (
-      <div className="es-generator">
-        {
-          this.getInput(state)
-        }
-        <button onClick={() => this.props.handleSubmit({ ...this.state.changed })} >submit</button>
-      </div>
+    return (<div className="es-generator" style={{ fontSize: 13 }} >
+      {
+        this.getInput(state)
+      }
+      <button style={{ fontSize: 'inherit' }} onClick={() => this.props.handleSubmit({ ...this.state.changed })} >submit</button>
+    </div>
     )
   }
 }
 
-export default Generator
+const StyledGenerator = styled(Generator) `
+  background: grey;
+  font-size: 12px;
+  `
+
+export default StyledGenerator
 
 
